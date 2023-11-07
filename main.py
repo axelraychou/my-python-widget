@@ -54,7 +54,7 @@ class Util:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type=str)
-    parser.add_argument('-n', "--number", type=int)
+    parser.add_argument('-n', "--number", type=int, default=None)
     args = parser.parse_args()
     util = Util(args.file)
     util.follow(args.number)
