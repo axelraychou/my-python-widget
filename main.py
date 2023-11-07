@@ -4,7 +4,7 @@ import os
 import sys
 
 
-class TailError(Exception):
+class UtilException(Exception):
     def __init__(self, msg):
         self.message = msg
 
@@ -14,11 +14,11 @@ class TailError(Exception):
 
 def check_file_validity(file_: str):
     if not os.access(file_, os.F_OK):
-        raise TailError("File '%s' does not exist" % file_)
+        raise UtilException("File '%s' does not exist" % file_)
     if not os.access(file_, os.R_OK):
-        raise TailError("File '%s' not readable" % file_)
+        raise UtilException("File '%s' not readable" % file_)
     if os.path.isdir(file_):
-        raise TailError("File '%s' is a directory" % file_)
+        raise UtilException("File '%s' is a directory" % file_)
 
 
 class Util:
@@ -34,9 +34,6 @@ class Util:
             file.seek(0, os.SEEK_END)
             position = file.tell()
             lines_seen = 0
-            if file.read(1) == '\n':
-                position -= 1
-                file.seek(position)
             while lines_seen < n and file.tell() > 0:
                 c = file.read(1)
                 if c == '\n':
